@@ -60,7 +60,28 @@ set incsearch		" Incremental search
 set autowrite		" Automatically save before commands like :next and :make
 set hidden             " Hide buffers when they are abandoned
 set mouse=a		" Enable mouse usage (all modes)
+set mouse=r
+set nu
 set clipboard=unnamed
+
+"to hilight current line
+iab #i #include
+
+
+" to save dotsfile of vim (.swp, undofile)
+if isdirectory($HOME . '/.vim/bck') == 0
+  :silent !mkdir -p ~/.vim/bck >/dev/null 2>&1
+  endif
+if has('persistent_undo')
+	set undofile "persistent undo
+	set undolevels=100 "100 persistent undo available
+	set undodir=~/.vim/bck// "save undofile in .vim/bck
+endif
+set directory=~/.vim/bck// "save swap files in .vim/bck
+set noswapfile
+
+
+
 " to comment ,ic and ,rc to uncomment code
 vmap ,ic :s/^/#/g<CR>:let @/ = ""<CR>
 map  ,ic :s/^/#/g<CR>:let @/ = ""<CR>
@@ -69,80 +90,16 @@ map  ,rc :s/^#//g<CR>:let @/ = ""<CR>
 
 set backspace=2
 
-" Pathogen load
-filetype off
-call pathogen#infect()
-call pathogen#helptags()
-
-filetype plugin indent on
-syntax on
-
-" Load the whole python plugin
-" Activate rope
-" Keys:
-" K             Show python docs
-" <ctrl-space>  Rope autocomplete
-" <ctrl-c>g     Rope goto definition
-" <ctrl-c>d     Rope show documentation
-" <ctrl-c>f     Rope find occurrences
-" <leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" [[            Jump on previous class or function (normal, visual, operator modes)
-" ]]            Jump on next class or function (normal, visual, operator modes)
-" [M            Jump on previous class or method (normal, visual, operator modes)
-" ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
-
-" Documentation
-let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
-
-"Linting
-let g:pymode_lint = 1
-let g:pymode_lint_checker = "pyflakes,pep8"
-" Auto check on save
-let g:pymode_lint_write = 1
-
-" Support virtualenv
-let g:pymode_virtualenv = 1
-
-" Enable breakpoints plugin
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_key = '<leader>b'
-
-" syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
-" Don't autofold code
-let g:pymode_folding = 0
-
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
-" Lines added by the Vim-R-plugin command :RpluginConfig (2014-avril-23 11:09):
-set nocompatible
-filetype plugin on
-" Change the <LocalLeader> key:
-let maplocalleader = ","
-" Use Ctrl+, to do omnicompletion:
-if has("gui_running")
-    inoremap <C-,> <C-x><C-o>
-else
-    inoremap <Nul> <C-x><C-o>
-endif
-" Press the space bar to send lines (in Normal mode) and selections to R:
-vmap <Space> <Plug>RDSendSelection
-nmap <Space> <Plug>RDSendLine
-
 " Force Vim to use 256 colors if running in a capable terminal emulator:
-if &term =~ "xterm" || &term =~ "256" || $DISPLAY != "" || $HAS_256_COLORS == "yes"
-    set t_Co=256
-endif
+"if &term =~ "xterm" || &term =~ "256" || $DISPLAY != "" || $HAS_256_COLORS == "yes"
+set t_Co=256
+"endif
 
 " There are hundreds of color schemes for Vim on the internet, but you can
 " start with color schemes already installed.
@@ -151,3 +108,22 @@ endif
 " character, like the # is for R language) and replace the value "not_defined"
 " below:
 "colorscheme not_defined
+
+"Plugin Vundle
+"
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'bling/vim-airline'
+Plugin 'MrJJJ/tslime.vim'
+call vundle#end()
+filetype plugin indent on
+
+" To integrate airline
+set laststatus=2
+colorscheme monokain
+

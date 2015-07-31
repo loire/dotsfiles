@@ -11,21 +11,13 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
-export HISTFILESIZE=20000
-export HISTSIZE=10000
+
+# append to the history file, don't overwrite it
 shopt -s histappend
-# Combine multiline commands into one in history
-shopt -s cmdhist
-# Ignore duplicates, ls without options and builtin commands
-HISTCONTROL=ignoredups
-export HISTIGNORE="&:ls:[bf]g:exit"
 
-
-
-LANG="fr_FR.UTF-8"
-LANGUAGE="fr:en"
-
-
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -80,25 +72,13 @@ xterm*|rxvt*)
     ;;
 esac
 
-function __setprompt {
-  local BLUE="\[\033[0;34m\]"
-  local NO_COLOUR="\[\033[0m\]"
-  local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-  local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-  if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-      local SSH_FLAG="@\h"
-  fi
-      PS1="$BLUE[\$(date +%H:%M)][\u$SSH_FLAG:\W]\\$ $NO_COLOUR"
-      PS2="$BLUE>$NO_COLOUR "
-      PS4='$BLUE+$NO_COLOUR '
-		      }
-__setprompt
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
+
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -108,34 +88,6 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias vi='vim'
-alias op='xdg-open'
-alias galaxy='sh ~/galaxy_server/galaxy-dist/run.sh --reload'
-alias edit='geany'
-alias open='evince'
-alias bc='bc -l'
-alias assort='cd /media/etienne/western3TB/data/assortmate_data/'
-alias buc='cd /media/etienne/western3TB/data/BUC_data/'
-alias isemclust='ssh -X eloire@162.38.181.17'
-alias terminator='terminator -l test'
-alias dirloop='for i in `ls -l | awk '\''/^d/{print $NF}'\''` ; do '
-alias Treeview='java -jar ../TreeView-1.1.6r4-bin/TreeView.jar'
-alias macse='java -jar ~/bin/macse_v0.9b1.jar'
-alias scanner='gscan2pdf'
-alias candidates='cd /media/etienne/western3TB/data/assortmate_data/RSEM/RefAssembly/Transcript_VMNR_alig/Mus_candidates'
-alias mus='cd /home/etienne/projet/Mus_Microsat'
-# grid engine library location
-
-export DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so
-export SGE_ROOT=/var/lib/gridengine/
-export SGE_CELL=SpeciationCell
-# add local path to $PATH
-
-export PATH=/usr/local:/home/etienne/bin:/home/etienne/bin/IGVTools:/home/etienne/src/rsem-1.2.5:/usr/share/samtools/:$PATH
-# python path
-export PYTHONPATH=$PYTHONPATH:/home/etienne/src/my_python_mod 
-
-
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -159,38 +111,4 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# Lines added by the Vim-R-plugin command :RpluginConfig (2014-avril-23 11:19):
-# Change the TERM environment variable (to get 256 colors) and make Vim
-# connecting to X Server even if running in a terminal emulator (to get
-# dynamic update of syntax highlight and Object Browser):
-if [ "x$DISPLAY" != "x" ]
-then
-    export HAS_256_COLORS=yes
-    alias tmux="tmux -2"
-    if [ "$TERM" = "xterm" ]
-    then
-        export TERM=xterm-256color
-    fi
-    alias vim="vim --servername VIM"
-    if [ "$TERM" == "xterm" ] || [ "$TERM" == "xterm-256color" ]
-    then
-        function tvim(){ tmux -2 new-session "TERM=screen-256color vim --servername VIM $@" ; }
-    else
-        function tvim(){ tmux new-session "vim --servername VIM $@" ; }
-    fi
-else
-    if [ "$TERM" == "xterm" ] || [ "$TERM" == "xterm-256color" ]
-    then
-        export HAS_256_COLORS=yes
-        alias tmux="tmux -2"
-        function tvim(){ tmux -2 new-session "TERM=screen-256color vim $@" ; }
-    else
-        function tvim(){ tmux new-session "vim $@" ; }
-    fi
-fi
-if [ "$TERM" = "screen" ] && [ "$HAS_256_COLORS" = "yes" ]
-then
-    export TERM=screen-256color
 fi

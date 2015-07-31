@@ -12,7 +12,7 @@ ZSH_THEME="fletcherm"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -40,7 +40,15 @@ ZSH_THEME="fletcherm"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd.mm.yyyy"
+
+# History modification
+setopt inc_append_history share_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt extended_history
+
+
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -81,6 +89,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 alias zshconfig="vi ~/.zshrc"
+alias zshsource="source ~/.zshrc"
 alias ohmyzsh="vi ~/.oh-my-zsh"
 # My aliases
 source $HOME/.aliases

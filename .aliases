@@ -1,0 +1,4 @@
+alias ll="ls -al"
+alias lld="ls -d */"
+alias vi="vim"
+alias xc="xsel --clipboard"

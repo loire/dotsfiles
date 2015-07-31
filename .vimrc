@@ -98,7 +98,7 @@ endif
 
 " Force Vim to use 256 colors if running in a capable terminal emulator:
 "if &term =~ "xterm" || &term =~ "256" || $DISPLAY != "" || $HAS_256_COLORS == "yes"
-set t_Co=256
+    set t_Co=256
 "endif
 
 " There are hundreds of color schemes for Vim on the internet, but you can

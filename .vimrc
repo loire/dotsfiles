@@ -90,6 +90,17 @@ map  ,rc :s/^#//g<CR>:let @/ = ""<CR>
 
 set backspace=2
 
+" to navigate between vim panes 
+" finding good keystrok considering tmux ^j and ^k are taken.
+" gonna use the alt+arrow road
+
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+
+
+
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
@@ -120,8 +131,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'bling/vim-airline'
 Plugin 'MrJJJ/tslime.vim'
+Plugin 'Valloric/YouCompleteMe'
+
 call vundle#end()
 filetype plugin indent on
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
 
 " To integrate airline
 set laststatus=2

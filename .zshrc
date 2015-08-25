@@ -43,7 +43,7 @@ HYPHEN_INSENSITIVE="true"
 HIST_STAMPS="dd.mm.yyyy"
 
 # History modification
-setopt inc_append_history share_history
+setopt inc_append_history
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt extended_history

@@ -99,6 +99,9 @@ nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 
+"Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
 
 
 
@@ -132,10 +135,13 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'bling/vim-airline'
 Plugin 'MrJJJ/tslime.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'lervag/vimtex'
+
 
 call vundle#end()
 filetype plugin indent on
 
+"Option of plugin YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
 
